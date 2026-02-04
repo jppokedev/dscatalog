@@ -1,8 +1,8 @@
-package com.devsuperior.dscatalog.dto;
+package com.bitworld.dscatalog.dto;
 
 import java.io.Serializable;
 
-import com.devsuperior.dscatalog.entities.Category;
+import com.bitworld.dscatalog.entities.Category;
 
 public class CategoryDTO implements Serializable {
 	private static final long serialVersionUID = 1L;

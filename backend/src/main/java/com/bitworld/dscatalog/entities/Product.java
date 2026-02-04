@@ -1,4 +1,4 @@
-package com.devsuperior.dscatalog.entities;
+package com.bitworld.dscatalog.entities;
 
 import java.time.Instant;
 import java.util.HashSet;

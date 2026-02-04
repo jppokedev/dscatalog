@@ -1,4 +1,4 @@
-package com.devsuperior.dscatalog.resources.exceptions;
+package com.bitworld.dscatalog.controller.exceptions;
 
 import java.time.Instant;
 
@@ -7,8 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.devsuperior.dscatalog.services.exceptions.DatabaseException;
-import com.devsuperior.dscatalog.services.exceptions.ResourceNotFoundException;
+import com.bitworld.dscatalog.services.exceptions.DatabaseException;
+import com.bitworld.dscatalog.services.exceptions.ResourceNotFoundException;
 
 import jakarta.servlet.http.HttpServletRequest;
 

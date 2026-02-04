@@ -1,4 +1,4 @@
-package com.devsuperior.dscatalog.services;
+package com.bitworld.dscatalog.services;
 
 import java.util.Optional;
 
@@ -10,14 +10,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.devsuperior.dscatalog.dto.CategoryDTO;
-import com.devsuperior.dscatalog.dto.ProductDTO;
-import com.devsuperior.dscatalog.entities.Category;
-import com.devsuperior.dscatalog.entities.Product;
-import com.devsuperior.dscatalog.repositories.CategoryRepository;
-import com.devsuperior.dscatalog.repositories.ProductRepository;
-import com.devsuperior.dscatalog.services.exceptions.DatabaseException;
-import com.devsuperior.dscatalog.services.exceptions.ResourceNotFoundException;
+import com.bitworld.dscatalog.dto.CategoryDTO;
+import com.bitworld.dscatalog.dto.ProductDTO;
+import com.bitworld.dscatalog.entities.Category;
+import com.bitworld.dscatalog.entities.Product;
+import com.bitworld.dscatalog.repositories.CategoryRepository;
+import com.bitworld.dscatalog.repositories.ProductRepository;
+import com.bitworld.dscatalog.services.exceptions.DatabaseException;
+import com.bitworld.dscatalog.services.exceptions.ResourceNotFoundException;
 
 import jakarta.persistence.EntityNotFoundException;
 
