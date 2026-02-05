@@ -16,11 +16,13 @@ public class ProductRespositoryTests {
 
     private long exintingId;
     private long countTotalProducts;
+    private long idNotExisting;
 
     @BeforeEach
     void setUp() {
         exintingId = 1L;
         countTotalProducts = 25L;
+        idNotExisting = 100L;
     }
 
     @Test
@@ -43,6 +45,22 @@ public class ProductRespositoryTests {
 
         Optional<Product> result = repository.findById(1L);
         Assertions.assertFalse(result.isPresent());
+    }
+
+    @Test
+    public void findByIdShouldReturnProductWhenIdExists(){
+
+        Optional<Product> result = repository.findById(exintingId);
+        Assertions.assertFalse(result.isEmpty());
+
+    }
+
+    @Test
+    public void findByIdShouldReturnProductWhenIdNotExists(){
+
+        Optional<Product> result = repository.findById(idNotExisting);
+        Assertions.assertEquals(Optional.empty(), result);
+
     }
 
 }
