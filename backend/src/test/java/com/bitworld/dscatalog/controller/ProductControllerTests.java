@@ -1,15 +1,14 @@
 package com.bitworld.dscatalog.controller;
 
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.when;
 import static org.mockito.ArgumentMatchers.any;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.bitworld.dscatalog.dto.ProductDTO;
 import com.bitworld.dscatalog.services.ProductService;
+import com.bitworld.dscatalog.services.exceptions.DatabaseException;
 import com.bitworld.dscatalog.services.exceptions.ResourceNotFoundException;
 import com.bitworld.dscatalog.tests.Factory;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -40,6 +39,7 @@ public class ProductControllerTests {
 
     private Long existingId;
     private Long nonExistingId;
+    private Long dependentId;
     private ProductDTO productDTO;
     private PageImpl<ProductDTO> page;
 
@@ -48,6 +48,7 @@ public class ProductControllerTests {
 
         existingId = 1L;
         nonExistingId = 2L;
+        dependentId = 3L;
 
         productDTO = Factory.createProductDTO();
         page = new PageImpl<>(List.of(productDTO));
@@ -59,6 +60,8 @@ public class ProductControllerTests {
 
         when(service.update(eq(existingId), any())).thenReturn(productDTO);
         when(service.update(eq(nonExistingId), any())).thenThrow(ResourceNotFoundException.class);
+
+        when(service.insert(any())).thenReturn(productDTO);
 
     }
 
@@ -118,6 +121,25 @@ public class ProductControllerTests {
 
         result.andExpect(status().isNotFound());
 
+    }
+
+    @Test
+    public void insertShouldReturnCreatedWhenReceiveProductDTO()throws Exception{
+
+        String jsonBody = objectMapper.writeValueAsString(productDTO);
+
+        ResultActions result = mockMvc.perform(post("/products")
+                .content(jsonBody)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON));
+
+        result.andExpect(status().isCreated());
+        result.andExpect(jsonPath("$.id").exists());
+        result.andExpect(jsonPath("$.name").exists());
+        result.andExpect(jsonPath("$.description").exists());
+        result.andExpect(header().exists("Location"));
+
+        verify(service, times(1)).insert(any());
     }
 
 }
