@@ -27,6 +27,10 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.verify;
+
 @ExtendWith(SpringExtension.class)
 public class ProductServiceTests {
 
@@ -86,8 +90,8 @@ public class ProductServiceTests {
 
         Page<ProductDTO> result = service.findAllPaged(pageable);
 
-        Assertions.assertNotNull(result);
-        Mockito.verify(repository).findAll(pageable);
+        assertNotNull(result);
+        verify(repository).findAll(pageable);
 
     }
 
@@ -96,14 +100,14 @@ public class ProductServiceTests {
 
         ProductDTO result = service.findById(existingId);
 
-        Assertions.assertNotNull(result);
+        assertNotNull(result);
 
     }
 
     @Test
     public void findByIdShouldThrowResourceNotFoundExceptionWhenIdDoesNotExist() {
 
-        Assertions.assertThrows(ResourceNotFoundException.class, () -> {
+        assertThrows(ResourceNotFoundException.class, () -> {
             service.findById(nonExistingId);
         });
     }
@@ -113,14 +117,14 @@ public class ProductServiceTests {
 
         ProductDTO result = service.update(existingId, productDTO);
 
-        Assertions.assertNotNull(result);
+        assertNotNull(result);
 
     }
 
     @Test
     public void updateShouldThrowResourceNotFoundExceptionWhenIdDoesNotExist() {
 
-        Assertions.assertThrows(ResourceNotFoundException.class, () -> {
+        assertThrows(ResourceNotFoundException.class, () -> {
             service.update(nonExistingId, productDTO);
         });
     }
@@ -136,7 +140,7 @@ public class ProductServiceTests {
     @Test
     public void deleteShouldThrowResourceNotFoundExceptionWhenIdDoesNotExist() {
 
-        Assertions.assertThrows(ResourceNotFoundException.class, () -> {
+        assertThrows(ResourceNotFoundException.class, () -> {
             service.delete(nonExistingId);
         });
     }
@@ -144,7 +148,7 @@ public class ProductServiceTests {
     @Test
     public void deleteShouldTrueDatabaseExceptionWhenDependentId(){
 
-        Assertions.assertThrows(DatabaseException.class, () -> {
+        assertThrows(DatabaseException.class, () -> {
            service.delete(dependentId);
         });
     }

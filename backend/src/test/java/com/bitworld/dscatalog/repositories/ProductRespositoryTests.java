@@ -8,6 +8,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 @DataJpaTest
 public class ProductRespositoryTests {
 
@@ -33,8 +35,8 @@ public class ProductRespositoryTests {
 
         product = repository.save(product);
 
-        Assertions.assertNotNull(product.getId());
-        Assertions.assertEquals(countTotalProducts + 1, product.getId());
+        assertNotNull(product.getId());
+        assertEquals(countTotalProducts + 1, product.getId());
 
     }
 
@@ -44,14 +46,14 @@ public class ProductRespositoryTests {
         repository.deleteById(exintingId);
 
         Optional<Product> result = repository.findById(1L);
-        Assertions.assertFalse(result.isPresent());
+        assertFalse(result.isPresent());
     }
 
     @Test
     public void findByIdShouldReturnProductWhenIdExists(){
 
         Optional<Product> result = repository.findById(exintingId);
-        Assertions.assertFalse(result.isEmpty());
+        assertFalse(result.isEmpty());
 
     }
 
@@ -59,7 +61,7 @@ public class ProductRespositoryTests {
     public void findByIdShouldReturnProductWhenIdNotExists(){
 
         Optional<Product> result = repository.findById(idNotExisting);
-        Assertions.assertEquals(Optional.empty(), result);
+        assertEquals(Optional.empty(), result);
 
     }
 
