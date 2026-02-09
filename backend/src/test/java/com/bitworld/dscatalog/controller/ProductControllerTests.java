@@ -63,6 +63,10 @@ public class ProductControllerTests {
 
         when(service.insert(any())).thenReturn(productDTO);
 
+        doNothing().when(service).delete(existingId);
+        doThrow(ResourceNotFoundException.class).when(service).delete(nonExistingId);
+        doThrow(DatabaseException.class).when(service).delete(dependentId);
+
     }
 
     @Test
@@ -124,7 +128,7 @@ public class ProductControllerTests {
     }
 
     @Test
-    public void insertShouldReturnCreatedWhenReceiveProductDTO()throws Exception{
+    public void insertShouldReturnProductDTOCreated()throws Exception{
 
         String jsonBody = objectMapper.writeValueAsString(productDTO);
 
@@ -140,6 +144,42 @@ public class ProductControllerTests {
         result.andExpect(header().exists("Location"));
 
         verify(service, times(1)).insert(any());
+    }
+
+    @Test
+    public void deleteShouldReturnNoContentWhenIdExist() throws Exception{
+
+        ResultActions result = mockMvc.perform(delete("/products/{id}",existingId)
+                .accept(MediaType.APPLICATION_JSON));
+
+        result.andExpect(status().isNoContent());
+
+        verify(service, times(1)).delete(existingId);
+
+    }
+
+    @Test
+    public void deleteShouldThrowsResourceNotFoundWhenIdDoesNotExits()throws Exception{
+
+        ResultActions result = mockMvc.perform(delete("/products/{id}", nonExistingId)
+                .accept(MediaType.APPLICATION_JSON));
+
+        result.andExpect(status().isNotFound());
+
+        verify(service, times(1)).delete(nonExistingId);
+
+    }
+
+    @Test
+    public void deleteShouldThrowsDataIntegrityViolationWhenIdDoesNotExits()throws Exception{
+
+        ResultActions result = mockMvc.perform(delete("/products/{id}", dependentId)
+                .accept(MediaType.APPLICATION_JSON));
+
+        result.andExpect(status().isBadRequest());
+
+        verify(service, times(1)).delete(dependentId);
+
     }
 
 }
