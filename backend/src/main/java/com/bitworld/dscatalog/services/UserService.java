@@ -3,6 +3,7 @@ package com.bitworld.dscatalog.services;
 import com.bitworld.dscatalog.dto.RoleDTO;
 import com.bitworld.dscatalog.dto.UserDTO;
 import com.bitworld.dscatalog.dto.UserInsertDTO;
+import com.bitworld.dscatalog.dto.UserUpdateDTO;
 import com.bitworld.dscatalog.entities.Role;
 import com.bitworld.dscatalog.entities.User;
 import com.bitworld.dscatalog.repositories.RoleRepository;
@@ -56,7 +57,7 @@ public class UserService {
 	}
 
 	@Transactional
-	public UserDTO update(Long id, UserDTO dto) {
+	public UserDTO update(Long id, UserUpdateDTO dto) {
 		try {
 			User entity = repository.getReferenceById(id);
 			copyDtoToEntity(dto, entity);
