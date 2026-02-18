@@ -1,5 +1,8 @@
 package com.bitworld.dscatalog.dto;
 
+import com.bitworld.dscatalog.services.validation.UserInsertValid;
+
+@UserInsertValid
 public class UserInsertDTO extends UserDTO{
 
     private String password;
