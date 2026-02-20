@@ -43,10 +43,10 @@ public class UserService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		List<UserDetailsProjection> result = repository.searchUserAndRolesByEmail(username);
 		if (result.isEmpty()){
-			throw new UsernameNotFoundException("Usuario não encontrado");
+			throw new UsernameNotFoundException("Email not found");
 		}
 		User user = new User();
-		user.setEmail(username);
+		user.setEmail(result.get(0).getUsername());
 		user.setPassword(result.get(0).getPassword());
 		for(UserDetailsProjection projection : result){
 			user.addRole(new Role(projection.getRoleId(), projection.getAuthority()));

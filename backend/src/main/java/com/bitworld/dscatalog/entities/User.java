@@ -73,6 +73,14 @@ public class User implements UserDetails {
         return password;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;
@@ -103,10 +111,6 @@ public class User implements UserDetails {
         return true;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public void addRole(Role role){
         roles.add(role);
     }
@@ -118,10 +122,6 @@ public class User implements UserDetails {
             }
         }
         return false;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
     }
 
     @Override
