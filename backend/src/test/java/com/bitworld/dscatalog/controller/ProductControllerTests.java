@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 
 import org.springframework.data.domain.PageImpl;
@@ -25,7 +26,7 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.List;
 
-@WebMvcTest(ProductController.class)
+@WebMvcTest(value = ProductController.class, excludeAutoConfiguration = {SecurityAutoConfiguration.class})
 public class ProductControllerTests {
 
     @Autowired
