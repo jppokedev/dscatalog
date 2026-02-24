@@ -1,7 +1,10 @@
 package com.bitworld.dscatalog.services;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
+import com.bitworld.dscatalog.projections.ProductProjection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -90,5 +93,16 @@ public class ProductService {
 			Category category = categoryRepository.getReferenceById(catDto.getId());
 			entity.getCategories().add(category);			
 		}
-	}	
+	}
+
+	@Transactional(readOnly = true)
+	public Page<ProductProjection> findAllPaged(String name, String categoryId, Pageable pageable) {
+
+		List<Long> categoryIds = Arrays.asList();
+		if (!"0".equals(categoryId)) {
+			categoryIds = Arrays.asList(categoryId.split(",")).stream().map(Long::parseLong).toList();
+		}
+
+		return repository.searchProducts(categoryIds, name, pageable);
+	}
 }
