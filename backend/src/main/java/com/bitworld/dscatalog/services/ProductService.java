@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.bitworld.dscatalog.projections.ProductProjection;
+import com.bitworld.dscatalog.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -96,18 +97,22 @@ public class ProductService {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Transactional(readOnly = true)
 	public Page<ProductDTO> findAllPaged(String name, String categoryId, Pageable pageable) {
 
-		List<Long> categoryIds = Arrays.asList();
+		List<Long> categoryIds = List.of();
 		if (!"0".equals(categoryId)) {
 			categoryIds = Arrays.asList(categoryId.split(",")).stream().map(Long::parseLong).toList();
 		}
 
-		Page<ProductProjection> page = repository.searchProducts(categoryIds, name, pageable);
+		Page<ProductProjection> page = repository.searchProducts(categoryIds, name.trim(), pageable);
 		List<Long> productIds = page.map(ProductProjection::getId).toList();
 
 		List<Product> entities = repository.searchProductsWithCategories(productIds);
+
+		entities = (List<Product>) Utils.replace(page.getContent(), entities);
+
 		List<ProductDTO> dtos = entities.stream().map(p -> new ProductDTO(p , p.getCategories())).toList();
 
 		return new PageImpl<>(dtos, page.getPageable(), page.getTotalElements());

@@ -1,8 +1,8 @@
 package com.bitworld.dscatalog.projections;
 
-public interface ProductProjection {
+import com.bitworld.dscatalog.entities.Product;
 
-    Long getId();
+public interface ProductProjection extends IdProjection<Long> {
+
     String getName();
-
 }
