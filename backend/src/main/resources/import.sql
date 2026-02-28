@@ -30,6 +30,7 @@ INSERT INTO tb_product (name, price, date, description, img_url) VALUES ('PC Gam
 
 INSERT INTO tb_user (first_name, last_name, email, password) VALUES ('Alex', 'Green', 'alex@gmail.com', '$2a$12$HE63nry9ehayq/y1qEvQOuCUnZLHoOrbpNjgkTmO1qeGzvjBhYdhm');
 INSERT INTO tb_user (first_name, last_name, email, password) VALUES ('Maria', 'Brown', 'maria@gmail.com', '$2a$12$HE63nry9ehayq/y1qEvQOuCUnZLHoOrbpNjgkTmO1qeGzvjBhYdhm');
+INSERT INTO tb_user (first_name, last_name, email, password) VALUES ('João', 'Fonseca', 'jp6857@gmail.com', '$2a$12$HE63nry9ehayq/y1qEvQOuCUnZLHoOrbpNjgkTmO1qeGzvjBhYdhm');
 
 INSERT INTO tb_role (authority) VALUES ('ROLE_OPERATOR');
 INSERT INTO tb_role (authority) VALUES ('ROLE_ADMIN');
@@ -37,6 +38,7 @@ INSERT INTO tb_role (authority) VALUES ('ROLE_ADMIN');
 INSERT INTO tb_user_role (user_id, role_id) VALUES (1, 1);
 INSERT INTO tb_user_role (user_id, role_id) VALUES (2, 1);
 INSERT INTO tb_user_role (user_id, role_id) VALUES (2, 2);
+INSERT INTO tb_user_role (user_id, role_id) VALUES (3, 1);
 
 INSERT INTO tb_product_category (product_id, category_id) VALUES (1, 2);
 INSERT INTO tb_product_category (product_id, category_id) VALUES (2, 1);
